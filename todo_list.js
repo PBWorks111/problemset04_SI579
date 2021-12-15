@@ -1,7 +1,9 @@
 function addTaskFunction() {
     description = document.getElementById("task_description_input").value
-    dueDateCall = document.getElementById('duedate_input')
-    dueTimeCall = document.getElementById('duetime_input')
+    dateInput = document.getElementById('duedate_input')
+    functioncall = document.getElementById('duetime_input').addEventListener("click", dateAndTimeToTimestamp)
+    timeInput = document.getElementById('duetime_input')
+    
     function dateAndTimeToTimestamp(dateInputElement, timeInputElement) {
         const dueDate = dateInputElement.valueAsNumber; // Returns the timestamp at midnight for the given date
         const dueTime = timeInputElement.valueAsNumber; // Returns the number of milliseconds from midnight to the time
@@ -9,16 +11,20 @@ function addTaskFunction() {
         if(dueDate && dueTime) { // The user specified both a due date & due time
             //Add the timezone offset to account for the fact that timestamps are specified by UTC
             const timezoneOffset =  (new Date()).getTimezoneOffset() * 60 * 1000;
-            console.log(dueDate + dueTime + timezoneOffset)
+            // console.log(dueDate + dueTime + timezoneOffset)
+            timestamp = dueDate + dueTime + timezoneOffset
+            console.log(timestamp)
+            new_format = new Date(timestamp).toLocaleString()
 
-            return dueDate + dueTime + timezoneOffset;
+
+            return new_format;
         } else {
             // if the user did not specify both a due date and due time, return false
             return false;
         }
 
 }
-dateandTimeConvert = dateAndTimeToTimestamp(dueDateCall, dueTimeCall)
+dateandTimeConvert = dateAndTimeToTimestamp(dateInput, timeInput)
 function addTask (description, dueTime){
 
 
@@ -55,7 +61,7 @@ function addTask (description, dueTime){
     }
 
 } 
-addTask(description, dateAndTimeToTimestamp(dueDateCall, dueTimeCall))   
+addTask(description, dateAndTimeToTimestamp(dateInput, document.getElementById('duetime_input')))   
 }
 
 
@@ -72,6 +78,7 @@ function testfunction (e){
 
     if (e.keyCode === 13) {
         addTaskFunction()
+        deleteTaskDescription()
         
       }
 }
@@ -79,6 +86,13 @@ function testfunction (e){
 
 
     
+
+
+
+
+
+
+
 
 
 
